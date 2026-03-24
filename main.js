@@ -1,12 +1,25 @@
 /**
- * MARCA C8 PRO - main.js v5
- * Scroll-driven animations + interactividad
+ * MARCA C8 PRO - main.js v6
+ * Scroll-driven reveal animation + interactividad
+ *
+ * ANIMATION SEQUENCE (scroll-reveal section, 300vh tall):
+ *
+ *  Phase 1 (progress 0.00 → 0.55):
+ *    Cards rise from 110vh below → reach full position at top of viewport
+ *    Opacity: fades in quickly, stays visible
+ *
+ *  Phase 2 (progress 0.50 → 0.85):
+ *    MARCAC8PRO text sweeps upward from center → top, over the cards
+ *    mix-blend-mode:difference creates the "cut-through" tech effect
+ *
+ *  Phase 3 (progress 0.80 → 1.00):
+ *    Everything (cards + text) exits upward together, fading out
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   // ============================================
-  // NAVBAR - Scroll effect
+  // NAVBAR
   // ============================================
   const navbar = document.querySelector('.navbar');
   window.addEventListener('scroll', () => {
@@ -14,70 +27,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   // ============================================
-  // SMOOTH SCROLL - Internal links
+  // SMOOTH SCROLL
   // ============================================
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
       const target = document.querySelector(anchor.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
 
   // ============================================
-  // MARQUEE - Duplicate for infinite loop
-  // ============================================
-  const marqueeTrack = document.querySelector('.marquee-track');
-  if (marqueeTrack) {
-    marqueeTrack.parentElement.appendChild(marqueeTrack.cloneNode(true));
-  }
-
-  // ============================================
-  // SCROLL REVEAL ANIMATION
-  //
-  // .reveal-cards: absolute positioned left:0 right:0, flex centered
-  //   JS applies translateY only (no X override needed)
-  // .reveal-marquee-text: absolute, sweeps from bottom upward
-  //
-  // Phases (progress 0→1):
-  //   0.00–0.50: Cards rise from 110vh→0, fade in
-  //   0.15–0.70: MARCAC8PRO text sweeps 80vh→-130vh over cards
-  //   0.65–1.00: Everything exits (fade out + rise)
+  // SCROLL REVEAL — 3-PHASE ANIMATION
   // ============================================
   const revealSection = document.getElementById('scroll-reveal');
   const revealCards   = document.getElementById('revealCards');
   const revealText    = document.getElementById('revealText');
 
   if (revealSection && revealCards && revealText) {
-
     const updateReveal = () => {
       const rect     = revealSection.getBoundingClientRect();
       const totalH   = revealSection.offsetHeight - window.innerHeight;
       const progress = Math.max(0, Math.min(1, -rect.top / totalH));
 
-      // Phase 1: Cards rise (0 → 0.50)
-      const p1     = Math.min(1, progress / 0.50);
-      const cardY  = (1 - easeOut(p1)) * 110; // 110vh → 0
+      // ---- PHASE 1: Cards rise (0 → 0.55) ----
+      // From 110vh below → 0 (full coverage, filling the viewport)
+      const p1      = Math.min(1, progress / 0.55);
+      const cardY   = (1 - easeOut(p1)) * 110; // 110vh → 0
+      const cardIn  = easeOut(Math.min(1, progress / 0.15)); // quick fade-in
 
-      // Phase 2: Text sweeps (0.15 → 0.70)
-      const p2        = Math.max(0, Math.min(1, (progress - 0.15) / 0.55));
-      const textY     = 80 - easeInOut(p2) * 210; // 80vh → -130vh
-      const textAlpha = p2 > 0 ? 1 : 0;
+      // ---- PHASE 2: Text sweeps (0.50 → 0.85) ----
+      // Starts from viewport center (50vh), sweeps to -60vh (above top)
+      const p2     = Math.max(0, Math.min(1, (progress - 0.50) / 0.35));
+      const textY  = 50 - easeInOut(p2) * 130; // 50vh → -80vh
+      const textIn = p2 > 0 ? Math.min(1, p2 / 0.1) : 0; // quick fade-in at start
 
-      // Phase 3: Exit (0.65 → 1.0)
-      const p3          = Math.max(0, Math.min(1, (progress - 0.65) / 0.35));
-      const exitOpacity = 1 - easeIn(p3);
-      const exitY       = easeIn(p3) * -25;
+      // ---- PHASE 3: Exit (0.80 → 1.0) ----
+      // Both cards and text exit upward with fade
+      const p3         = Math.max(0, Math.min(1, (progress - 0.80) / 0.20));
+      const exitY      = easeIn(p3) * -60;    // drift upward
+      const exitFade   = 1 - easeIn(p3);      // fade out
 
-      // Cards: translateY only
+      // Apply cards
       revealCards.style.transform = 'translateY(calc(' + (cardY + exitY) + 'vh))';
-      revealCards.style.opacity   = String(Math.max(0, easeOut(p1) * exitOpacity));
+      revealCards.style.opacity   = String(cardIn * exitFade);
 
-      // Text: sweep Y + exit fade
-      revealText.style.transform = 'translateY(' + textY + 'vh)';
-      revealText.style.opacity   = String(Math.max(0, textAlpha * exitOpacity));
+      // Apply text (independent Y + exit drift)
+      revealText.style.transform = 'translateY(calc(' + textY + 'vh + ' + exitY + 'vh))';
+      revealText.style.opacity   = String(textIn * exitFade);
     };
 
     window.addEventListener('scroll', updateReveal, { passive: true });
@@ -85,43 +81,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Easing helpers
-  function easeOut(t)    { return 1 - Math.pow(1 - t, 3); }
-  function easeIn(t)     { return t * t * t; }
-  function easeInOut(t)  { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+  function easeOut(t)   { return 1 - Math.pow(1 - t, 3); }
+  function easeIn(t)    { return t * t * t; }
+  function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
 
   // ============================================
-  // BENEFITS CARDS - Tilt effect on hover
+  // BENEFITS CARDS — 3D tilt on hover
   // ============================================
   document.querySelectorAll('.benefit-card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const rotateX = ((e.clientY - rect.top  - rect.height/2) / rect.height) *  5;
-      const rotateY = ((e.clientX - rect.left - rect.width /2) / rect.width ) * -5;
-      card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top  - r.height/2) / r.height) *  5;
+      const ry = ((e.clientX - r.left - r.width /2) / r.width ) * -5;
+      card.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02)';
     });
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 
   // ============================================
-  // FAQ - Single open accordion
+  // FAQ — Single-open accordion
   // ============================================
   document.querySelectorAll('.faq-item').forEach(item => {
     item.addEventListener('toggle', () => {
       if (item.open) {
-        document.querySelectorAll('.faq-item[open]').forEach(other => {
-          if (other !== item) other.removeAttribute('open');
+        document.querySelectorAll('.faq-item[open]').forEach(o => {
+          if (o !== item) o.removeAttribute('open');
         });
       }
     });
   });
 
   // ============================================
-  // INTERSECTION OBSERVER - Fade in sections
+  // INTERSECTION OBSERVER — fade-in sections
   // ============================================
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
-    });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
   document.querySelectorAll(
@@ -135,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ============================================
-  // VIDEO - Play on scroll into view
+  // VIDEO — play on scroll into view
   // ============================================
   const video = document.querySelector('.video-wrapper video');
   if (video) {
@@ -145,11 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ============================================
-  // CTA FINAL - Staggered line reveal
+  // CTA FINAL — staggered line reveal
   // ============================================
   const ctaLines = document.querySelectorAll('.cta-text p');
-  ctaLines.forEach((line, i) => {
-    line.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity .6s ease ' + (0.5 + i*0.3) + 's,transform .6s ease ' + (0.5 + i*0.3) + 's';
+  ctaLines.forEach((l, i) => {
+    l.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity .6s ease ' + (0.5+i*0.3) + 's,transform .6s ease ' + (0.5+i*0.3) + 's';
   });
   const ctaSection = document.querySelector('.cta-final');
   if (ctaSection) {
@@ -163,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================
-// CSS injected by JS
+// Injected CSS
 // ============================================
 const styleTag = document.createElement('style');
 styleTag.textContent = `
@@ -171,7 +165,6 @@ styleTag.textContent = `
   .fade-in.is-visible { opacity:1; transform:translateY(0); }
   .navbar--scrolled { background:rgba(0,0,0,.97) !important; }
   .benefit-card { transition:transform .3s ease; }
-  #revealCards { will-change:transform,opacity; }
-  #revealText  { will-change:transform,opacity; }
+  #revealCards, #revealText { will-change:transform,opacity; }
 `;
 document.head.appendChild(styleTag);
