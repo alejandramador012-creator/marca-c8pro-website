@@ -1,4 +1,4 @@
-/* MARCA C8 PRO - Stylesheet v5 */
+/* MARCA C8 PRO - Stylesheet v6 */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --color-black:#000;
@@ -29,81 +29,41 @@ a{text-decoration:none;color:inherit}
 .btn-nav-cta:hover{background:transparent;color:var(--color-white)}
 
 /* HERO */
-.hero{min-height:100vh;background:var(--color-black);display:flex;align-items:center;justify-content:center;text-align:center;padding:var(--nav-height) 60px 60px;position:relative;overflow:hidden}
-.hero-content{display:flex;flex-direction:column;align-items:center;max-width:860px;width:100%;gap:0;position:relative;z-index:2}
-.hero-title{
-  font-family:var(--font-primary);
-  font-size:clamp(28px,3.5vw,45px);
-  font-weight:700;
-  line-height:1.15;
-  letter-spacing:-.01em;
-  text-transform:uppercase;
-  color:var(--color-white);
-  margin-bottom:28px;
-  text-align:center
-}
-.hero-subtitle{
-  font-family:var(--font-primary);
-  font-size:clamp(13px,1.1vw,16px);
-  font-weight:500;
-  line-height:1.65;
-  color:var(--color-white);
-  text-align:center;
-  margin-bottom:36px;
-  max-width:680px;
-  display:block
-}
-.btn-hero{
-  display:inline-block;
-  padding:14px 42px;
-  border:2px solid var(--color-white);
-  border-radius:50px;
-  font-family:var(--font-primary);
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.1em;
-  color:var(--color-black);
-  background:var(--color-white);
-  transition:all .3s ease
-}
+.hero{min-height:100vh;background:var(--color-black);display:flex;align-items:center;justify-content:center;text-align:center;padding:var(--nav-height) 60px 60px;position:relative}
+.hero-content{display:flex;flex-direction:column;align-items:center;max-width:860px;width:100%}
+.hero-title{font-family:var(--font-primary);font-size:clamp(28px,3.5vw,45px);font-weight:700;line-height:1.15;letter-spacing:-.01em;text-transform:uppercase;color:var(--color-white);margin-bottom:28px;text-align:center}
+.hero-subtitle{font-family:var(--font-primary);font-size:clamp(13px,1.1vw,16px);font-weight:500;line-height:1.65;color:var(--color-white);text-align:center;margin-bottom:36px;max-width:680px;display:block}
+.btn-hero{display:inline-block;padding:14px 42px;border:2px solid var(--color-white);border-radius:50px;font-family:var(--font-primary);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--color-black);background:var(--color-white);transition:all .3s ease}
 .btn-hero:hover{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-white)}
 
 /* ============================================
    SCROLL REVEAL SECTION
-   - Images + MARCAC8PRO text animate upward
-     over the hero as user scrolls down
    ============================================ */
 .scroll-reveal-section{
   position:relative;
-  height:300vh; /* tall enough to drive animation */
+  height:300vh;
   background:var(--color-black);
-  z-index:1;
 }
 .scroll-reveal-sticky{
   position:sticky;
   top:0;
   height:100vh;
   overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
-/* The 3 floating cards */
+/* Cards: positioned at bottom center using flex on sticky container */
 .reveal-cards{
   position:absolute;
   bottom:0;
-  left:50%;
-  transform:translateX(-50%);
+  left:0;
+  right:0;
   display:flex;
   align-items:flex-end;
   justify-content:center;
   gap:20px;
-  width:100%;
-  max-width:1100px;
   padding:0 40px;
-  will-change:transform, opacity;
   pointer-events:none;
+  /* JS controls translateY only */
 }
 .reveal-card{
   border-radius:20px;
@@ -121,20 +81,19 @@ a{text-decoration:none;color:inherit}
 .reveal-card--center img{
   width:280px;
   height:500px;
-  margin-bottom:40px;
 }
 
-/* MARCAC8PRO text overlay */
+/* MARCAC8PRO text sweeping over cards */
 .reveal-marquee-text{
   position:absolute;
   left:0;
   right:0;
+  bottom:0;
   display:flex;
   align-items:center;
   justify-content:center;
   pointer-events:none;
   z-index:10;
-  will-change:transform, opacity;
   mix-blend-mode:difference;
 }
 .reveal-marquee-text span{
@@ -146,9 +105,10 @@ a{text-decoration:none;color:inherit}
   color:var(--color-white);
   white-space:nowrap;
   line-height:1;
+  user-select:none;
 }
 
-/* MARQUEE (below reveal section) */
+/* MARQUEE */
 .marquee-strip{background:var(--color-black);overflow:hidden;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
 .marquee-track{display:flex;animation:marquee 22s linear infinite;width:max-content}
 .marquee-track span{font-family:var(--font-primary);font-size:clamp(48px,8vw,100px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;color:var(--color-white);white-space:nowrap}
