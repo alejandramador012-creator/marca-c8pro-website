@@ -1,6 +1,6 @@
 /**
- * MARCA C8 PRO - main.js
- * Interactividad de la página web
+ * MARCA C8 PRO - main.js v3
+ * Scroll-driven animations + interactividad
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,16 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // NAVBAR - Scroll effect
   // ============================================
   const navbar = document.querySelector('.navbar');
-  
-  const handleScroll = () => {
+  window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
       navbar?.classList.add('navbar--scrolled');
     } else {
       navbar?.classList.remove('navbar--scrolled');
     }
-  };
-
-  window.addEventListener('scroll', handleScroll, { passive: true });
+  }, { passive: true });
 
   // ============================================
   // SMOOTH SCROLL - Internal links
@@ -38,9 +35,66 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================
   const marqueeTrack = document.querySelector('.marquee-track');
   if (marqueeTrack) {
-    // Clone track content for seamless loop
     const clone = marqueeTrack.cloneNode(true);
     marqueeTrack.parentElement.appendChild(clone);
+  }
+
+  // ============================================
+  // SCROLL REVEAL ANIMATION
+  // The 3 cards rise from the bottom, the MARCAC8PRO
+  // text sweeps upward over them like a reveal effect.
+  // All driven purely by scroll position.
+  // ============================================
+  const revealSection = document.getElementById('scroll-reveal');
+  const revealCards = document.getElementById('revealCards');
+  const revealText = document.getElementById('revealText');
+
+  if (revealSection && revealCards && revealText) {
+
+    // Initial state: cards start off-screen at the bottom,
+    // text starts at center of viewport (will sweep up)
+    revealCards.style.transform = 'translateY(100vh)';
+    revealCards.style.opacity = '0';
+    revealText.style.transform = 'translateY(60vh)';
+    revealText.style.opacity = '0';
+
+    const updateReveal = () => {
+      const rect = revealSection.getBoundingClientRect();
+      const sectionHeight = revealSection.offsetHeight;
+      const viewH = window.innerHeight;
+
+      // How far we've scrolled INTO the sticky section (0 to 1)
+      // progress 0 = just entered, progress 1 = about to leave
+      const scrolled = -rect.top; // px scrolled past section start
+      const total = sectionHeight - viewH; // total scrollable range
+      const progress = Math.max(0, Math.min(1, scrolled / total));
+
+      // ---- Phase 1 (0 → 0.4): Cards rise from below + fade in ----
+      const p1 = Math.max(0, Math.min(1, progress / 0.4));
+      const cardsY = (1 - p1) * 100; // from 100vh → 0vh
+      const cardsOpacity = p1;
+
+      // ---- Phase 2 (0.2 → 0.65): Text sweeps upward from center ----
+      const p2 = Math.max(0, Math.min(1, (progress - 0.2) / 0.45));
+      const textY = 60 - p2 * 140; // from 60vh → -80vh
+      const textOpacity = p2 < 0.1 ? p2 * 10 : (p2 > 0.85 ? (1 - p2) / 0.15 : 1);
+
+      // ---- Phase 3 (0.7 → 1.0): Everything fades out + rises away ----
+      const p3 = Math.max(0, Math.min(1, (progress - 0.7) / 0.3));
+      const exitY = -p3 * 40; // slight upward exit
+      const exitOpacity = 1 - p3;
+
+      // Apply to cards
+      revealCards.style.transform = `translateY(calc(${cardsY}vh + ${exitY}vh))`;
+      revealCards.style.opacity = cardsOpacity * exitOpacity;
+
+      // Apply to text (already has its own movement, just apply exit fade)
+      revealText.style.transform = `translateY(${textY}vh)`;
+      revealText.style.opacity = Math.min(textOpacity, exitOpacity);
+    };
+
+    window.addEventListener('scroll', updateReveal, { passive: true });
+    updateReveal(); // run once on load
   }
 
   // ============================================
@@ -51,13 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * 5;
-      const rotateY = ((x - centerX) / centerX) * -5;
+      const rotateX = ((y - rect.height / 2) / rect.height) * 5;
+      const rotateY = ((x - rect.width / 2) / rect.width) * -5;
       card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
     });
-
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
     });
@@ -69,40 +120,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.faq-item').forEach(item => {
     item.addEventListener('toggle', () => {
       if (item.open) {
-        // Close other open items
         document.querySelectorAll('.faq-item[open]').forEach(other => {
-          if (other !== item) {
-            other.removeAttribute('open');
-          }
+          if (other !== item) other.removeAttribute('open');
         });
       }
     });
   });
 
   // ============================================
-  // GALLERY SECTION - Parallax scrolling
-  // ============================================
-  const galleryCards = document.querySelectorAll('.gallery-card');
-  
-  const handleParallax = () => {
-    const scrollY = window.scrollY;
-    galleryCards.forEach((card, i) => {
-      const speed = i === 1 ? 0.05 : 0.03 * (i % 2 === 0 ? 1 : -1);
-      const translateY = scrollY * speed;
-      card.style.transform = `translateY(${translateY}px)`;
-    });
-  };
-
-  window.addEventListener('scroll', handleParallax, { passive: true });
-
-  // ============================================
   // INTERSECTION OBSERVER - Fade in sections
   // ============================================
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -110,20 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-  // Observe sections for fade-in animation
-  const sections = document.querySelectorAll(
+  document.querySelectorAll(
     '.about-section, .video-section, .pain-section, .benefits-section, .presence-section, .faq-section, .cta-final'
-  );
-  sections.forEach(section => {
+  ).forEach(section => {
     section.classList.add('fade-in');
     observer.observe(section);
   });
 
-  // Observe individual cards
-  const cards = document.querySelectorAll('.feature-item, .pain-card, .benefit-card, .faq-item');
-  cards.forEach((card, i) => {
+  document.querySelectorAll('.feature-item, .pain-card, .benefit-card, .faq-item').forEach((card, i) => {
     card.classList.add('fade-in');
     card.style.transitionDelay = `${i * 0.08}s`;
     observer.observe(card);
@@ -134,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================
   const video = document.querySelector('.video-wrapper video');
   if (video) {
-    const videoObserver = new IntersectionObserver((entries) => {
+    new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           video.play().catch(() => {});
@@ -142,13 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
           video.pause();
         }
       });
-    }, { threshold: 0.3 });
-    
-    videoObserver.observe(video);
+    }, { threshold: 0.3 }).observe(video);
   }
 
   // ============================================
-  // CTA FINAL - Typewriter effect
+  // CTA FINAL - Staggered line reveal
   // ============================================
   const ctaLines = document.querySelectorAll('.cta-text p');
   ctaLines.forEach((line, i) => {
@@ -157,20 +178,19 @@ document.addEventListener('DOMContentLoaded', () => {
     line.style.transition = `opacity 0.6s ease ${0.5 + i * 0.3}s, transform 0.6s ease ${0.5 + i * 0.3}s`;
   });
 
-  const ctaObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        ctaLines.forEach(line => {
-          line.style.opacity = '1';
-          line.style.transform = 'translateY(0)';
-        });
-        ctaObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
   const ctaSection = document.querySelector('.cta-final');
-  if (ctaSection) ctaObserver.observe(ctaSection);
+  if (ctaSection) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          ctaLines.forEach(line => {
+            line.style.opacity = '1';
+            line.style.transform = 'translateY(0)';
+          });
+        }
+      });
+    }, { threshold: 0.3 }).observe(ctaSection);
+  }
 
 });
 
@@ -190,10 +210,15 @@ animationStyles.textContent = `
   }
   .navbar--scrolled {
     background: rgba(0, 0, 0, 0.97) !important;
-    border-bottom-color: rgba(255,255,255,0.12) !important;
   }
   .benefit-card {
     transition: transform 0.3s ease;
+  }
+  #revealCards {
+    transition: none;
+  }
+  #revealText {
+    transition: none;
   }
 `;
 document.head.appendChild(animationStyles);
