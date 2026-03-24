@@ -1,4 +1,4 @@
-/* MARCA C8 PRO - Stylesheet v6 */
+/* MARCA C8 PRO - Stylesheet v7 */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --color-black:#000;
@@ -38,6 +38,7 @@ a{text-decoration:none;color:inherit}
 
 /* ============================================
    SCROLL REVEAL SECTION
+   300vh tall — sticky inner drives the animation
    ============================================ */
 .scroll-reveal-section{
   position:relative;
@@ -51,7 +52,7 @@ a{text-decoration:none;color:inherit}
   overflow:hidden;
 }
 
-/* Cards: positioned at bottom center using flex on sticky container */
+/* 3 cards — centered, JS controls translateY */
 .reveal-cards{
   position:absolute;
   bottom:0;
@@ -63,7 +64,6 @@ a{text-decoration:none;color:inherit}
   gap:20px;
   padding:0 40px;
   pointer-events:none;
-  /* JS controls translateY only */
 }
 .reveal-card{
   border-radius:20px;
@@ -83,7 +83,7 @@ a{text-decoration:none;color:inherit}
   height:500px;
 }
 
-/* MARCAC8PRO text sweeping over cards */
+/* MARCAC8PRO text — sweeps upward over cards */
 .reveal-marquee-text{
   position:absolute;
   left:0;
@@ -107,12 +107,6 @@ a{text-decoration:none;color:inherit}
   line-height:1;
   user-select:none;
 }
-
-/* MARQUEE */
-.marquee-strip{background:var(--color-black);overflow:hidden;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
-.marquee-track{display:flex;animation:marquee 22s linear infinite;width:max-content}
-.marquee-track span{font-family:var(--font-primary);font-size:clamp(48px,8vw,100px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;color:var(--color-white);white-space:nowrap}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ABOUT */
 .about-section{background:var(--color-black);padding:100px 40px}
