@@ -97,7 +97,7 @@ button { cursor: none; }
 }
 .hero-content {
   display: flex; flex-direction: column; align-items: center;
-  max-width: 900px; width: 100%;
+  max-width: 1100px; width: 100%;
   position: relative; z-index: 1;
 }
 .hero-eyebrow {
@@ -106,19 +106,20 @@ button { cursor: none; }
   color: var(--color-accent); margin-bottom: 32px; opacity: 0;
 }
 
-/* H1 — 3 líneas equilibradas */
+/* H1 — 2 líneas equilibradas */
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(40px, 6vw, 82px);
-  font-weight: 600; line-height: 1.08;
+  font-size: clamp(32px, 4.6vw, 70px);
+  font-weight: 600; line-height: 1.1;
   letter-spacing: -0.02em; text-transform: none;
   color: var(--color-white); margin-bottom: 32px; text-align: center;
   /* Para el efecto glow de caracteres */
   position: relative;
 }
+.hero-accent { font-style: italic; color: var(--color-accent); }
 .line-mask { display: block; overflow: hidden; padding-bottom: 0.06em; }
 .line-text  { display: block; }
-.hero-title em { font-style: italic; color: var(--color-accent); }
+/* .hero-accent handles italic accent in H1 */
 
 /* Caracteres individuales del glow */
 .h-char {
@@ -143,7 +144,7 @@ button { cursor: none; }
 .btn-hero:hover { background: transparent; color: var(--color-accent); transform: translateY(-2px); }
 
 /* ── SCROLL REVEAL ───────────────────────────────────────── */
-.scroll-reveal-section { position: relative; height: 300vh; background: var(--color-bg); }
+.scroll-reveal-section { position: relative; height: 180vh; background: var(--color-bg); }
 .scroll-reveal-sticky  { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 .reveal-cards {
   position: absolute; bottom: 0; left: 0; right: 0;
@@ -306,7 +307,7 @@ button { cursor: none; }
 /* ── PAIN — STICKY DECK OF CARDS ────────────────────────── */
 .pain-section {
   background: var(--color-cream); color: var(--color-dark);
-  padding: 120px 40px 80px; text-align: center;
+  padding: 120px 40px 0; text-align: center;
 }
 .pain-title {
   font-family: var(--font-serif); font-size: clamp(28px, 4vw, 52px);
@@ -329,7 +330,7 @@ button { cursor: none; }
 .pain-card:nth-child(1) { z-index: 1; }
 .pain-card:nth-child(2) { z-index: 2; }
 .pain-card:nth-child(3) { z-index: 3; }
-.pain-card:nth-child(4) { z-index: 4; margin-bottom: 0; }
+.pain-card:nth-child(4) { z-index: 4; margin-bottom: 40vh; }
 
 .pain-img-wrapper { position: relative; height: 200px; overflow: hidden; }
 .pain-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
@@ -345,10 +346,10 @@ button { cursor: none; }
 /* ── BENEFITS — 100VW FULL WIDTH ─────────────────────────── */
 .benefits-section {
   background: var(--color-bg);
-  padding: 120px 0 0;          /* sin padding horizontal */
+  padding: 120px 0 100px;      /* sin padding horizontal, con espacio inferior */
   text-align: center;
   position: sticky; top: 0; z-index: 2;
-  min-height: 100vh;
+  min-height: auto;            /* se expande según contenido */
   border-radius: 28px 28px 0 0;
   box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
 }
@@ -362,7 +363,7 @@ button { cursor: none; }
   display: grid; grid-template-columns: repeat(3, 1fr);
 }
 .benefit-card {
-  position: relative; min-height: 520px; overflow: hidden;
+  position: relative; min-height: 580px; overflow: hidden;
   display: flex; align-items: flex-end;
   transition: transform 0.4s ease;
 }
@@ -407,7 +408,7 @@ button { cursor: none; }
 /* Banderas */
 .flags-grid {
   display: flex; justify-content: center;
-  gap: 36px; flex-wrap: wrap; margin-bottom: 72px;
+  gap: 36px; flex-wrap: wrap; margin-bottom: 0;
 }
 .flag-item {
   display: flex; flex-direction: column; align-items: center; gap: 14px;
@@ -426,15 +427,6 @@ button { cursor: none; }
   letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--color-muted); text-align: center;
 }
-.client-logos {
-  display: flex; justify-content: center;
-  align-items: center; gap: 48px; flex-wrap: wrap;
-}
-.client-logos img {
-  height: 44px; width: auto; object-fit: contain; opacity: 0.6;
-  filter: brightness(0) invert(1); transition: opacity 0.3s;
-}
-.client-logos img:hover { opacity: 1; }
 
 /* ── FAQ ─────────────────────────────────────────────────── */
 .faq-section {

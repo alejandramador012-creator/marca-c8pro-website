@@ -176,7 +176,7 @@ if (revealSection && revealCards && revealText) {
     trigger: revealSection,
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1.2,
+    scrub: 0.7,
     onUpdate: (self) => {
       const p = self.progress
 
@@ -228,8 +228,20 @@ fadeIn('.pain-title', '.pain-section')
 fadeIn('.benefits-title', '.benefits-section')
 fadeIn('.benefit-card', '.benefits-section', { stagger: 0.1 })
 fadeIn('.presence-title, .presence-sub', '.presence-section')
-fadeIn('.flag-item', '.presence-section', { stagger: 0.06 })
-fadeIn('.client-logos img', '.presence-section', { stagger: 0.07 })
+
+// Banderas: entrada con scale + fade sutil y stagger bien espaciado
+gsap.fromTo('.flag-item',
+  { y: 32, opacity: 0, scale: 0.88 },
+  {
+    y: 0, opacity: 1, scale: 1,
+    duration: 0.75, stagger: 0.1, ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.flags-grid',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse',
+    },
+  }
+)
 fadeIn('.faq-title, .faq-category', '.faq-section')
 fadeIn('.faq-item', '.faq-section', { stagger: 0.07 })
 fadeIn('.cta-text p', '.cta-final', { stagger: 0.14 })
