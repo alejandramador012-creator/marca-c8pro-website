@@ -1,3 +1,7 @@
-# Large media files - servir localmente o via CDN
+node_modules/
+dist/
+.DS_Store
+
+# Large media files
 assets/vsl-marcac8pro.mp4
 assets/*.mp4
