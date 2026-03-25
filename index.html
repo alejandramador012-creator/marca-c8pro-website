@@ -6,14 +6,10 @@
   <title>Marca C8 PRO — Tu Sistema de Autoridad Digital | AMA Studio</title>
   <meta name="description" content="Aplica la metodología Marca C8® y transmuta tu identidad visual y estratégica en un ecosistema que conecte, convierta y escale tu negocio en solo 8 semanas.">
 
-  <!-- Fuentes: Cormorant Garamond (serif editorial) + Inter (sans técnica) + Azeret Mono -->
+  <!-- Fuentes: Cormorant Garamond (serif editorial) + Inter (sans técnica) + Azeret Mono (thin tech) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/animations.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@400;500;600;700&family=Azeret+Mono:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -40,21 +36,20 @@
   </nav>
 </header>
 
-<!-- HERO SECTION -->
+<!-- ═══════════════════════════════════════════════════════
+     HERO SECTION — 3 líneas equilibradas + glow effect
+═══════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-content">
 
     <p class="hero-eyebrow">Metodología Marca C8® · AMA Studio</p>
 
-    <h1 class="hero-title">
+    <h1 class="hero-title" id="heroTitle">
       <span class="line-mask">
-        <span class="line-text">Tu marca no es</span>
+        <span class="line-text">Tu marca no es un logo bonito.</span>
       </span>
       <span class="line-mask">
-        <span class="line-text">un logo bonito.</span>
-      </span>
-      <span class="line-mask">
-        <em class="line-text">Es tu Sistema de</em>
+        <span class="line-text">Es tu Sistema de</span>
       </span>
       <span class="line-mask">
         <em class="line-text">Autoridad Digital.</em>
@@ -71,28 +66,24 @@
   </div>
 </section>
 
-<!-- SCROLL REVEAL SECTION
-     Phase 1: 3 cards rise from bottom, filling the viewport
-     Phase 2: MARCAC8PRO text sweeps upward over cards (blend mode effect)
-     Phase 3: Everything exits upward, page continues
--->
+<!-- ═══════════════════════════════════════════════════════
+     SCROLL REVEAL — Stagger izq → centro → der + MARCAC8PRO
+═══════════════════════════════════════════════════════ -->
 <div class="scroll-reveal-section" id="scroll-reveal">
   <div class="scroll-reveal-sticky">
 
-    <!-- MARCAC8PRO text sweeps over cards -->
     <div class="reveal-marquee-text" id="revealText">
       <span>MARCAC8PRO</span>
     </div>
 
-    <!-- The 3 rising cards -->
     <div class="reveal-cards" id="revealCards">
-      <div class="reveal-card">
+      <div class="reveal-card" id="revealCard0">
         <img src="https://static.wixstatic.com/media/1ad83e_c352b37f17ab4ec9bbc5176b54732d51~mv2.png" alt="Portada 1" loading="lazy">
       </div>
-      <div class="reveal-card reveal-card--center">
+      <div class="reveal-card reveal-card--center" id="revealCard1">
         <img src="https://static.wixstatic.com/media/1ad83e_8646bca2ba6a4d2f8240a20097f8e2e3~mv2.png" alt="Portada central" loading="lazy">
       </div>
-      <div class="reveal-card">
+      <div class="reveal-card" id="revealCard2">
         <img src="https://static.wixstatic.com/media/1ad83e_2909513c2f1b4f4e91e349385ec0e930~mv2.png" alt="Portada 3" loading="lazy">
       </div>
     </div>
@@ -100,7 +91,9 @@
   </div>
 </div>
 
-<!-- NOSOTROS / ABOUT SECTION -->
+<!-- ═══════════════════════════════════════════════════════
+     NOSOTROS / ABOUT + FEATURES — 6 tarjetas numeradas
+═══════════════════════════════════════════════════════ -->
 <section id="nosotros" class="about-section">
   <div class="about-inner">
     <div class="about-label">NOSOTROS</div>
@@ -109,50 +102,79 @@
     <div class="features-label">CARACTER&Iacute;STICAS</div>
     <h3 class="features-title">Lo que obtendr&aacute;s</h3>
     <div class="features-grid">
-      <div class="feature-item">
+
+      <div class="feature-card">
+        <span class="feature-num">01</span>
         <h3>Branding completo</h3>
-        <p>Identidad visual, tono de voz, storytelling y estilo gr&aacute;fico. Tu marca con personalidad propia.</p>
+        <p>Identidad visual, tono de voz, storytelling y estilo gr&aacute;fico. Tu marca con personalidad propia y diferenciación real.</p>
       </div>
-      <div class="feature-item">
+
+      <div class="feature-card">
+        <span class="feature-num">02</span>
         <h3>Estrategia de marca</h3>
-        <p>Claridad, gu&iacute;a espec&iacute;fica de todo el ecosistema de tu marca y plan de acci&oacute;n estrat&eacute;gico.</p>
+        <p>Claridad total sobre el ecosistema de tu marca, posicionamiento y un plan de acci&oacute;n estrat&eacute;gico ejecutable.</p>
       </div>
-      <div class="feature-item">
+
+      <div class="feature-card">
+        <span class="feature-num">03</span>
         <h3>Web lista para convertir</h3>
-        <p>Tu embudo de conversi&oacute;n alineado a tu estrategia: landing, web o portafolio.</p>
+        <p>Tu embudo de conversi&oacute;n alineado a tu estrategia: landing, web o portafolio dise&ntilde;ado para vender.</p>
       </div>
-      <div class="feature-item">
+
+      <div class="feature-card">
+        <span class="feature-num">04</span>
         <h3>Toolkit visual editable</h3>
-        <p>Herramientas especializadas para medir el &eacute;xito de tu negocio y sus productos o servicios.</p>
+        <p>Kit completo de plantillas para redes sociales y comunicaciones, editables y alineadas a tu identidad.</p>
       </div>
-      <div class="feature-item">
-        <h3>Acompa&ntilde;amiento personalizado</h3>
-        <p>Gu&iacute;a directa 1:1 en todo el proceso de creaci&oacute;n, definici&oacute;n y aplicaci&oacute;n.</p>
+
+      <div class="feature-card">
+        <span class="feature-num">05</span>
+        <h3>Acompa&ntilde;amiento 1:1</h3>
+        <p>Gu&iacute;a directa y personalizada en todo el proceso de creaci&oacute;n, definici&oacute;n y aplicaci&oacute;n de tu sistema.</p>
       </div>
-      <div class="feature-item">
-        <h3>Manual de identidad y estrategia</h3>
-        <p>Todo tu negocio documentado en un manual completo, listo para lanzar.</p>
+
+      <div class="feature-card">
+        <span class="feature-num">06</span>
+        <h3>Manual de identidad</h3>
+        <p>Todo tu negocio documentado en un manual completo y profesional, listo para lanzar y escalar.</p>
       </div>
+
     </div>
     <a href="https://calendly.com/ama-studio-/30min" target="_blank" rel="noopener" class="btn-outline">CON&Oacute;CENOS A DETALLE</a>
   </div>
 </section>
 
-<!-- VIDEO CTA SECTION -->
+<!-- ═══════════════════════════════════════════════════════
+     VIDEO — Orden: título → video (con sonido) → CTA
+═══════════════════════════════════════════════════════ -->
 <section class="video-section">
   <div class="video-label">ESTO ES MARCA C8 PRO</div>
-  <a href="https://calendly.com/ama-studio-/30min" target="_blank" rel="noopener" class="btn-agenda">AGENDAR LLAMADA</a>
   <div class="video-wrapper">
-    <video autoplay muted loop playsinline>
+    <video id="vslVideo" loop playsinline muted>
+      <source src="/assets/vsl-marcac8pro.mp4" type="video/mp4">
+      <!-- Fallback -->
       <source src="https://video.wixstatic.com/video/1ad83e_dcd9d4631f5c4d6a958b01485bc5d751/480p/mp4/file.mp4" type="video/mp4">
     </video>
+    <div class="video-play-overlay" id="videoOverlay">
+      <button class="video-play-btn" id="videoPlayBtn" aria-label="Reproducir con sonido">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="36" cy="36" r="35" stroke="rgba(245,243,238,0.7)" stroke-width="1"/>
+          <polygon points="28,22 28,50 54,36" fill="white"/>
+        </svg>
+        <span>REPRODUCIR CON SONIDO</span>
+      </button>
+    </div>
   </div>
+  <a href="https://calendly.com/ama-studio-/30min" target="_blank" rel="noopener" class="btn-agenda">S&Iacute;, QUIERO LA METAMORFOSIS DIGITAL</a>
 </section>
 
-<!-- PAIN POINTS SECTION -->
+<!-- ═══════════════════════════════════════════════════════
+     PAIN POINTS — Deck apilado (sticky stacking)
+═══════════════════════════════════════════════════════ -->
 <section class="pain-section">
   <h2 class="pain-title">Si est&aacute;s aqu&iacute;, probablemente&hellip;</h2>
-  <div class="pain-grid">
+  <div class="pain-stack">
+
     <div class="pain-card">
       <div class="pain-img-wrapper">
         <img src="https://static.wixstatic.com/media/1ad83e_45c9b23c3dd947098f6d7fb1e2ab9d06~mv2.jpg" alt="01" loading="lazy">
@@ -160,6 +182,7 @@
       </div>
       <p>Tienes un buen producto o servicio, pero no logras que te vean como referente.</p>
     </div>
+
     <div class="pain-card">
       <div class="pain-img-wrapper">
         <img src="https://static.wixstatic.com/media/1ad83e_3bdd34d02b92470e9b9aaa9543c54aba~mv2.jpg" alt="02" loading="lazy">
@@ -167,13 +190,15 @@
       </div>
       <p>Tu marca no genera confianza ni posicionamiento claro.</p>
     </div>
+
     <div class="pain-card">
       <div class="pain-img-wrapper">
         <img src="https://static.wixstatic.com/media/1ad83e_4ce3a71811134c9f878a803419c6d4cb~mv2.jpg" alt="03" loading="lazy">
         <span class="pain-number">03.</span>
       </div>
-      <p>Est&aacute;s atrapado en el redise&ntilde;o constante, sin resultados.</p>
+      <p>Est&aacute;s atrapado en el redise&ntilde;o constante, sin resultados reales.</p>
     </div>
+
     <div class="pain-card">
       <div class="pain-img-wrapper">
         <img src="https://static.wixstatic.com/media/1ad83e_eca35884a8144e6da14d2af6e1388c52~mv2.jpg" alt="04" loading="lazy">
@@ -181,12 +206,17 @@
       </div>
       <p>No sabes c&oacute;mo conectar visualmente con tu audiencia y crear comunidad.</p>
     </div>
+
   </div>
 </section>
 
-<!-- BENEFITS SECTION — sticky layer 1 -->
+<!-- ═══════════════════════════════════════════════════════
+     BENEFITS — 100vw full-width sin márgenes
+═══════════════════════════════════════════════════════ -->
 <section class="benefits-section">
-  <h2 class="benefits-title">Beneficios tangibles del programa</h2>
+  <div class="benefits-header">
+    <h2 class="benefits-title">Beneficios tangibles del programa</h2>
+  </div>
   <div class="benefits-grid">
     <div class="benefit-card">
       <div class="benefit-bg" style="background-image: url('https://static.wixstatic.com/media/1ad83e_c4bab51b431743d9a5a1c6c14d2aa9ec~mv2.jpg')"></div>
@@ -212,17 +242,37 @@
   </div>
 </section>
 
-<!-- PRESENCE SECTION — sticky layer 2 -->
+<!-- ═══════════════════════════════════════════════════════
+     PRESENCE — Banderas de países (flagcdn)
+═══════════════════════════════════════════════════════ -->
 <section class="presence-section">
   <h2 class="presence-title">Nuestra presencia</h2>
-  <p class="presence-sub">Hemos creado y trabajado con marcas de</p>
-  <div class="presence-logos">
-    <img src="https://static.wixstatic.com/media/1ad83e_18fdcf3cc0cb42b38f42b27126b19336~mv2.png" alt="País 1" loading="lazy">
-    <img src="https://static.wixstatic.com/media/1ad83e_f3af10a358124323b2b591523e1e9715~mv2.png" alt="País 2" loading="lazy">
-    <img src="https://static.wixstatic.com/media/1ad83e_46f27a6f1a3245948a74f0f4ebbe1320~mv2.png" alt="País 3" loading="lazy">
-    <img src="https://static.wixstatic.com/media/1ad83e_0ebcd84c455f4433b3dc29f62366ce9d~mv2.png" alt="País 4" loading="lazy">
-    <img src="https://static.wixstatic.com/media/1ad83e_b30d5234e03f47c480d7d3256c745155~mv2.png" alt="País 5" loading="lazy">
-    <img src="https://static.wixstatic.com/media/1ad83e_187cf548582341db868677c79b5509ec~mv2.png" alt="País 6" loading="lazy">
+  <p class="presence-sub">Marcas creadas en</p>
+  <div class="flags-grid">
+    <div class="flag-item">
+      <img src="https://flagcdn.com/w80/id.png" alt="Indonesia" loading="lazy">
+      <span>INDONESIA</span>
+    </div>
+    <div class="flag-item">
+      <img src="https://flagcdn.com/w80/co.png" alt="Colombia" loading="lazy">
+      <span>COLOMBIA</span>
+    </div>
+    <div class="flag-item">
+      <img src="https://flagcdn.com/w80/ae.png" alt="Emiratos Árabes" loading="lazy">
+      <span>EMIRATOS &Aacute;RABES</span>
+    </div>
+    <div class="flag-item">
+      <img src="https://flagcdn.com/w80/us.png" alt="Estados Unidos" loading="lazy">
+      <span>ESTADOS UNIDOS</span>
+    </div>
+    <div class="flag-item">
+      <img src="https://flagcdn.com/w80/gb.png" alt="Reino Unido" loading="lazy">
+      <span>REINO UNIDO</span>
+    </div>
+    <div class="flag-item">
+      <img src="https://flagcdn.com/w80/pa.png" alt="Panamá" loading="lazy">
+      <span>PANAM&Aacute;</span>
+    </div>
   </div>
   <div class="client-logos">
     <img src="https://static.wixstatic.com/media/1ad83e_c310d6bca9db429d96778be43f3d53c4~mv2.png" alt="Cliente 1" loading="lazy">
@@ -233,7 +283,7 @@
   </div>
 </section>
 
-<!-- FAQ SECTION — sticky layer 3 -->
+<!-- FAQ -->
 <section id="agenda" class="faq-section">
   <div class="faq-header">
     <h2 class="faq-title">Preguntas frecuentes</h2>
@@ -275,17 +325,19 @@
   </div>
 </section>
 
-<!-- CTA FINAL SECTION — sticky layer 4 -->
+<!-- ═══════════════════════════════════════════════════════
+     CTA FINAL — Mono técnica + glitch defragment
+═══════════════════════════════════════════════════════ -->
 <section class="cta-final">
   <div class="cta-text">
-    <p>Esto no es branding bonito.</p>
-    <p>Es <strong>estrategia, calidad y estructura</strong></p>
+    <p>Esto no es un branding bonito.</p>
+    <p>Es estrategia, calidad y estructura</p>
     <p>al servicio de tu crecimiento.</p>
     <p>Deja de redise&ntilde;ar.</p>
     <p>Deja de improvisar.</p>
-    <p><strong>Empieza a posicionarte.</strong></p>
+    <p>Empieza a posicionarte.</p>
   </div>
-  <a href="https://calendly.com/ama-studio-/30min" target="_blank" rel="noopener" class="btn-cta-final">QUIERO TRANSFORMAR MI MARCA</a>
+  <a href="https://calendly.com/ama-studio-/30min" target="_blank" rel="noopener" class="btn-cta-final">S&Iacute;, QUIERO LA METAMORFOSIS DIGITAL</a>
 </section>
 
 <!-- FOOTER -->
@@ -301,12 +353,7 @@
   </div>
 </footer>
 
-<!-- Librerías CDN — GSAP + ScrollTrigger + Lenis -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-
-<!-- Animaciones -->
-<script src="js/animations.js"></script>
+<!-- Entry point — Vite bundlea GSAP + Lenis desde node_modules -->
+<script type="module" src="/js/main.js"></script>
 </body>
 </html>

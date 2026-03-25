@@ -100,13 +100,16 @@
   // ============================================================
   // 4. HERO — Masked Reveal
   // ============================================================
-  gsap.set('.hero-subtitle', { y: 24 });
-  gsap.set('.btn-hero',      { y: 20 });
+  // Fijar estados iniciales vía GSAP (evita conflicto con CSS transform)
+  gsap.set('.line-text',     { y: '110%', opacity: 0 });
+  gsap.set('.hero-eyebrow',  { opacity: 0 });
+  gsap.set('.hero-subtitle', { y: 28, opacity: 0 });
+  gsap.set('.btn-hero',      { y: 20, opacity: 0 });
 
   const heroTl = gsap.timeline({ delay: 0.2, defaults: { ease: 'power4.out' } });
   heroTl
     .to('.hero-eyebrow',  { opacity: 1, duration: 0.6 })
-    .to('.line-text',     { yPercent: 0, opacity: 1, duration: 1.1, stagger: 0.13 }, '-=0.3')
+    .to('.line-text',     { y: '0%', opacity: 1, duration: 1.1, stagger: 0.13 }, '-=0.3')
     .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.9 }, '-=0.55')
     .to('.btn-hero',      { opacity: 1, y: 0, duration: 0.7 }, '-=0.55');
 
