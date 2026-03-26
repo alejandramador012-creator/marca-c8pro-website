@@ -135,78 +135,38 @@ function setupHeroGlow() {
 }
 
 // ============================================================
-// 5. SCROLL REVEAL — Stagger secuencial izq → centro → der
+// 5. SCROLL REVEAL — Solo MARCAC8PRO: sube rápido y desaparece
 // ============================================================
 const revealSection = document.getElementById('scroll-reveal')
-const revealCards   = document.getElementById('revealCards')
 const revealText    = document.getElementById('revealText')
 
 function easeOut(t)   { return 1 - Math.pow(1 - t, 3) }
 function easeIn(t)    { return t * t * t }
 function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2 }
 
-if (revealSection && revealCards && revealText) {
-  // Inicializar cada tarjeta individualmente
-  const cards = [
-    document.getElementById('revealCard0'),
-    document.getElementById('revealCard1'),
-    document.getElementById('revealCard2'),
-  ].filter(Boolean)
-
-  cards.forEach((card) => {
-    card.style.transform = 'translateY(110vh)'
-    card.style.opacity   = '0'
-  })
+if (revealSection && revealText) {
   revealText.style.opacity   = '0'
   revealText.style.transform = 'translateY(100vh)'
-
-  // Timing individual por tarjeta:
-  // Izq (0): 0.00 → 0.28
-  // Centro (1): 0.10 → 0.38
-  // Der (2): 0.20 → 0.48
-  // MARCAC8PRO: 0.40 → 0.75
-  // Exit: 0.75 → 1.00
-  const cardTimings = [
-    { start: 0,    end: 0.28 },
-    { start: 0.10, end: 0.38 },
-    { start: 0.20, end: 0.48 },
-  ]
 
   ScrollTrigger.create({
     trigger: revealSection,
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 0.7,
+    scrub: 0.4,           // scrub bajo = reacción MÁS rápida al scroll
     onUpdate: (self) => {
       const p = self.progress
 
-      // ── Fase 3: Salida (0.75 → 1.0) ──
-      const p3       = Math.max(0, Math.min(1, (p - 0.75) / 0.25))
-      const exitY    = easeIn(p3) * -80
-      const exitFade = 1 - easeIn(p3)
+      // Fase 1 — Sube rápido desde abajo (0.00 → 0.45)
+      const pIn    = Math.max(0, Math.min(1, p / 0.45))
+      const riseY  = (1 - easeOut(pIn)) * 100   // 100vh → 0
 
-      // Contenedor solo se mueve en fase de salida
-      revealCards.style.transform = `translateY(${exitY}vh)`
-      revealCards.style.opacity   = String(exitFade)
+      // Fase 2 — Sale disparado hacia arriba (0.50 → 1.00)
+      const pOut   = Math.max(0, Math.min(1, (p - 0.50) / 0.50))
+      const exitY  = easeIn(pOut) * -120          // 0 → -120vh
+      const fade   = 1 - easeIn(pOut)             // 1 → 0
 
-      // ── Fase 1: Tarjetas con stagger ──
-      cards.forEach((card, i) => {
-        const { start, end } = cardTimings[i]
-        const pCard = Math.max(0, Math.min(1, (p - start) / (end - start)))
-        const cardY = (1 - easeOut(pCard)) * 110
-        const fadeIn = Math.min(1, pCard / 0.18)
-
-        card.style.transform = `translateY(${cardY}vh)`
-        card.style.opacity   = String(fadeIn)
-      })
-
-      // ── Fase 2: MARCAC8PRO sube (0.40 → 0.75) ──
-      const p2     = Math.max(0, Math.min(1, (p - 0.40) / 0.35))
-      const textY  = 100 - easeInOut(p2) * 180
-      const textIn = Math.min(1, p2 / 0.08)
-
-      revealText.style.transform = `translateY(calc(${textY}vh + ${exitY}vh))`
-      revealText.style.opacity   = String(textIn * exitFade)
+      revealText.style.transform = `translateY(calc(${riseY}vh + ${exitY}vh))`
+      revealText.style.opacity   = String(Math.min(pIn / 0.12, 1) * fade)
     },
   })
 }

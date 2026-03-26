@@ -143,24 +143,13 @@ button { cursor: none; }
 }
 .btn-hero:hover { background: transparent; color: var(--color-accent); transform: translateY(-2px); }
 
-/* ── SCROLL REVEAL ───────────────────────────────────────── */
-.scroll-reveal-section { position: relative; height: 180vh; background: var(--color-bg); }
+/* ── SCROLL REVEAL — Solo texto MARCAC8PRO ───────────────── */
+/* Sección corta: solo el tiempo justo para que suba y desaparezca */
+.scroll-reveal-section { position: relative; height: 120vh; background: var(--color-bg); }
 .scroll-reveal-sticky  { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-.reveal-cards {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  display: flex; align-items: flex-end; justify-content: center;
-  gap: 20px; padding: 0 40px; pointer-events: none;
-}
-.reveal-card {
-  border-radius: 20px; overflow: hidden; flex: 0 0 auto;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
-  /* Estado inicial via JS */
-  will-change: transform, opacity;
-}
-.reveal-card img { width: 240px; height: 440px; object-fit: cover; border-radius: 20px; display: block; }
-.reveal-card--center img { width: 280px; height: 500px; }
 .reveal-marquee-text {
-  position: absolute; left: 0; right: 0; bottom: 0;
+  position: absolute; left: 0; right: 0;
+  top: 50%; transform: translateY(-50%);
   display: flex; align-items: center; justify-content: center;
   pointer-events: none; z-index: 10; mix-blend-mode: difference;
   will-change: transform, opacity;
@@ -349,7 +338,7 @@ button { cursor: none; }
   padding: 120px 0 120px;      /* sin padding horizontal */
   text-align: center;
   position: sticky; top: 0; z-index: 2;
-  min-height: 160vh;           /* scroll time suficiente para leer las 3 tarjetas */
+  min-height: 360vh;           /* espacio amplio para leer las 3 tarjetas completas */
   border-radius: 28px 28px 0 0;
   box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
 }
@@ -363,7 +352,7 @@ button { cursor: none; }
   display: grid; grid-template-columns: repeat(3, 1fr);
 }
 .benefit-card {
-  position: relative; min-height: 580px; overflow: hidden;
+  position: relative; min-height: 680px; overflow: hidden;
   display: flex; align-items: flex-end;
   transition: transform 0.4s ease;
 }
@@ -438,7 +427,7 @@ button { cursor: none; }
 .faq-section {
   background: var(--color-bg); padding: 120px 40px;
   position: sticky; top: 0; z-index: 4;
-  min-height: 100vh; border-radius: 28px 28px 0 0;
+  min-height: 280vh; border-radius: 28px 28px 0 0;
   box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
 }
 .faq-header { max-width: var(--max-content); margin: 0 auto 48px; }
